@@ -1,4 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
+import { reposReducer } from '../features/gitSlice';
 
 export const store = configureStore({
   reducer: {

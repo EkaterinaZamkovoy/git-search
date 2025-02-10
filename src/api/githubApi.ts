@@ -16,7 +16,6 @@ export const fetchRepos = createAsyncThunk(
       return response.data;
     } catch (error) {
       return rejectWithValue('Ошибка загрузки репозиториев');
-    } finally {
     }
   }
 );

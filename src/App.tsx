@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchRepos } from './api/githubApi';
 import { AppDispatch, RootState } from './store/store';
 import { SearchBar } from './components/SearchBar';
-import { CardsBlock } from './components/Card';
+import { CardsBlock } from './components/CardsBlock';
 
 function App() {
   const dispatch = useDispatch<AppDispatch>();

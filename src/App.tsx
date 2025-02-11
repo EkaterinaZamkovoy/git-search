@@ -3,17 +3,13 @@ import './App.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchRepos } from './api/githubApi';
 import { AppDispatch, RootState } from './store/store';
-import { setUserName } from './features/gitSlice';
+import { SearchBar } from './components/SearchBar';
 
 function App() {
   const dispatch = useDispatch<AppDispatch>();
   const { userName, page, repos } = useSelector(
     (state: RootState) => state.repos
   );
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch(setUserName(e.target.value));
-  };
 
   useEffect(() => {
     if (userName) {
@@ -22,14 +18,17 @@ function App() {
   }, [userName, page]);
 
   return (
-    <>
-      <h1>🔍 GitHub Репозитории</h1>
-      <input
-        type='text'
-        value={userName}
-        onChange={handleInputChange}
-        placeholder='Введите имя пользователя'
-      />
+    <div className='main-wrapper'>
+      <div className='main-title'>
+        <img
+          src='/public/icons8-github.svg'
+          alt='GitHub Icon'
+          width='50'
+          height='50'
+        />
+        <h1>GitHub Репозитории</h1>
+      </div>
+      <SearchBar />
       {repos.map(r => (
         <div key={r.id}>
           <h3>
@@ -42,7 +41,7 @@ function App() {
           <p>📅 Обновлено: {new Date(r.updated_at).toLocaleDateString()}</p>
         </div>
       ))}
-    </>
+    </div>
   );
 }
 

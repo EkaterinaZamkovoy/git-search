@@ -4,17 +4,19 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchRepos } from './api/githubApi';
 import { AppDispatch, RootState } from './store/store';
 import { SearchBar } from './components/SearchBar';
+import { CardsBlock } from './components/Card';
 
 function App() {
   const dispatch = useDispatch<AppDispatch>();
-  const { userName, page, repos } = useSelector(
-    (state: RootState) => state.repos
-  );
+  const { userName, page } = useSelector((state: RootState) => state.repos);
 
   useEffect(() => {
-    if (userName) {
-      dispatch(fetchRepos({ username: userName, page }));
-    }
+    const timer = setTimeout(() => {
+      if (userName.trim().length > 2) {
+        dispatch(fetchRepos({ username: userName, page }));
+      }
+    }, 500);
+    return () => clearTimeout(timer);
   }, [userName, page]);
 
   return (
@@ -29,18 +31,7 @@ function App() {
         <h1>GitHub Репозитории</h1>
       </div>
       <SearchBar />
-      {repos.map(r => (
-        <div key={r.id}>
-          <h3>
-            <a href={r.html_url} target='_blank' rel='noopener noreferrer'>
-              {r.name}
-            </a>
-          </h3>
-          <p>{r.description || 'Нет описания'}</p>
-          <p>⭐ {r.stargazers_count} звезд</p>
-          <p>📅 Обновлено: {new Date(r.updated_at).toLocaleDateString()}</p>
-        </div>
-      ))}
+      <CardsBlock />
     </div>
   );
 }

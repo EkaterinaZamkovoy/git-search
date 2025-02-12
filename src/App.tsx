@@ -5,11 +5,12 @@ import { fetchRepos } from './api/githubApi';
 import { AppDispatch, RootState } from './store/store';
 import { SearchBar } from './components/SearchBar';
 import { CardsBlock } from './components/CardsBlock';
+import { ErrorSnackbar } from './components/ErrorSnackbar';
 
 function App() {
   const dispatch = useDispatch<AppDispatch>();
   const { userName, page } = useSelector((state: RootState) => state.repos);
-
+  
   useEffect(() => {
     const timer = setTimeout(() => {
       if (userName.trim().length > 2) {
@@ -32,6 +33,7 @@ function App() {
       </div>
       <SearchBar />
       <CardsBlock />
+      <ErrorSnackbar message='Error' duration={6000} />
     </div>
   );
 }

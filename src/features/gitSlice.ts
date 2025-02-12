@@ -37,6 +37,9 @@ export const reposSlice = createSlice({
     setUserName: (state, action: PayloadAction<string>) => {
       state.userName = action.payload;
     },
+    setError: (state, action) => {
+      state.error = action.payload.error;
+    },
   },
   extraReducers: builder => {
     builder.addCase(fetchRepos.pending, state => {
@@ -55,11 +58,11 @@ export const reposSlice = createSlice({
     );
     builder.addCase(fetchRepos.rejected, (state, action) => {
       state.status = 'failed';
-      state.error = (action.payload as string) || 'Ошибка загрузки';
+      state.error = (action.payload as string) || 'Ошибка загрузки данных';
     });
   },
 });
 
-export const { resetState, setUserName } = reposSlice.actions;
+export const { resetState, setUserName, setError } = reposSlice.actions;
 
 export const reposReducer = reposSlice.reducer;

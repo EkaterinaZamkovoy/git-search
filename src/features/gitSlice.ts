@@ -37,8 +37,8 @@ export const reposSlice = createSlice({
     setUserName: (state, action: PayloadAction<string>) => {
       state.userName = action.payload;
     },
-    setError: (state, action) => {
-      state.error = action.payload.error;
+    clearError: state => {
+      state.error = null;
     },
   },
   extraReducers: builder => {
@@ -63,6 +63,6 @@ export const reposSlice = createSlice({
   },
 });
 
-export const { resetState, setUserName, setError } = reposSlice.actions;
+export const { resetState, setUserName, clearError } = reposSlice.actions;
 
 export const reposReducer = reposSlice.reducer;

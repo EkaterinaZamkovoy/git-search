@@ -1,7 +1,7 @@
-import { useEffect } from 'react';
-import { setError } from '../features/gitSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../store/store';
+import { useEffect } from 'react';
+import { clearError } from '../features/gitSlice';
 
 type SnackbarProps = {
   message: string;
@@ -20,7 +20,7 @@ export const ErrorSnackbar = ({
     if (!error) return;
 
     const timer = setTimeout(() => {
-      dispatch(setError({ error: null }));
+      dispatch(clearError());
     }, duration);
 
     return () => clearTimeout(timer);
@@ -29,7 +29,7 @@ export const ErrorSnackbar = ({
   if (!error) return null;
 
   const handleClose = () => {
-    dispatch(setError({ error: null }));
+    dispatch(clearError());
   };
 
   return (

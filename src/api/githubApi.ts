@@ -23,8 +23,7 @@ export const fetchRepos = createAsyncThunk(
         if (status === 401) return rejectWithValue('Необходима авторизация');
         if (status === 403) return rejectWithValue('Доступ запрещён');
         if (status === 404) return rejectWithValue('Пользователь не найден');
-        if (status >= 500)
-          return rejectWithValue('Сервер временно недоступен');
+        if (status >= 500) return rejectWithValue('Сервер временно недоступен');
         return rejectWithValue(
           axiosError.response.data?.message || 'Ошибка запроса'
         );

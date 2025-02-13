@@ -6,6 +6,10 @@
   gap: 30px;
   width: 100%;
   padding: 50px;
+
+  @media (max-width: 426px) {
+    padding: 20px;
+  }
 }
 
 .main-title {
@@ -26,6 +30,10 @@
 .search-bar-wrapper {
   display: flex;
   gap: 30px;
+
+  @media (max-width: 426px) {
+    gap: 15px;
+  }
 }
 
 .search-bar {

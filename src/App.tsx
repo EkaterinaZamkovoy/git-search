@@ -9,15 +9,18 @@ import { ErrorSnackbar } from './components/ErrorSnackbar';
 
 function App() {
   const dispatch = useDispatch<AppDispatch>();
-  const { userName, page } = useSelector((state: RootState) => state.repos);
-  
+  const { userName, page, hasMore, status } = useSelector(
+    (state: RootState) => state.repos
+  );
+
   useEffect(() => {
-    const timer = setTimeout(() => {
-      if (userName.trim().length > 2) {
+    if (userName.trim().length > 2 && hasMore && status !== 'loading') {
+      const timer = setTimeout(() => {
         dispatch(fetchRepos({ username: userName, page }));
-      }
-    }, 500);
-    return () => clearTimeout(timer);
+      }, 1000);
+
+      return () => clearTimeout(timer);
+    }
   }, [userName, page]);
 
   return (

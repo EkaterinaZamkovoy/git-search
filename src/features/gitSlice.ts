@@ -36,6 +36,12 @@ export const reposSlice = createSlice({
     },
     setUserName: (state, action: PayloadAction<string>) => {
       state.userName = action.payload;
+      state.page = 1;
+      state.hasMore = true;
+      state.repos = [];
+    },
+    setPage: (state, action: PayloadAction<number>) => {
+      state.page = action.payload;
     },
     clearError: state => {
       state.error = null;
@@ -52,7 +58,11 @@ export const reposSlice = createSlice({
         if (action.payload.length < 20) {
           state.hasMore = false;
         }
-        state.repos = [...state.repos, ...action.payload];
+        state.repos =
+          state.page === 1
+            ? action.payload
+            : [...state.repos, ...action.payload];
+        state.page += 1;
         state.status = 'succeeded';
       }
     );
@@ -63,6 +73,7 @@ export const reposSlice = createSlice({
   },
 });
 
-export const { resetState, setUserName, clearError } = reposSlice.actions;
+export const { resetState, setUserName, clearError, setPage } =
+  reposSlice.actions;
 
 export const reposReducer = reposSlice.reducer;

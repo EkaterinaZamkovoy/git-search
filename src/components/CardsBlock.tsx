@@ -1,13 +1,39 @@
-import { useSelector } from 'react-redux';
-import { RootState } from '../store/store';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, RootState } from '../store/store';
 import { LoadingPage } from './LoadingPage';
+import { useEffect } from 'react';
+import { fetchRepos } from '../api/githubApi';
+import { setPage } from '../features/gitSlice';
 
 export const CardsBlock = () => {
-  const { repos, status } = useSelector((state: RootState) => state.repos);
-  console.log('👀 Status:', status, 'Repos count:', repos.length);
+  const { repos, status, hasMore, userName, page } = useSelector(
+    (state: RootState) => state.repos
+  );
+
+  const dispatch = useDispatch<AppDispatch>();
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (!hasMore || status === 'loading') return;
+
+      const { scrollTop, scrollHeight, clientHeight } =
+        document.documentElement;
+
+      if (scrollTop + clientHeight >= scrollHeight - 10) {
+        const nextPage = page + 1;
+        dispatch(setPage(nextPage));
+        dispatch(fetchRepos({ username: userName, page: page + 1 }));
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [hasMore, status, page, userName]);
+
   return (
     <>
-      {status === 'loading' ? (
+      {status === 'loading' && repos.length === 0 ? (
         <LoadingPage />
       ) : (
         <div className='cards-wrapper'>

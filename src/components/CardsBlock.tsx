@@ -36,21 +36,33 @@ export const CardsBlock = () => {
       {status === 'loading' && repos.length === 0 ? (
         <LoadingPage />
       ) : (
-        <div className='cards-wrapper'>
-          {repos.map(r => (
-            <div key={r.id} className='card-wrapper'>
-              <h3>
-                <a href={r.html_url} target='_blank' rel='noopener noreferrer'>
-                  {r.name}
-                </a>
-              </h3>
-              <p>{r.description || 'Описание отсутствует'}</p>
-              <p>{r.stargazers_count} ⭐</p>
-              <p>
-                📅 Обновлено: {new Date(r.updated_at).toLocaleDateString('ru')}
-              </p>
+        <div className='response-wrapper'>
+          {status === 'succeeded' && repos.length === 0 ? (
+            <p className='no-repos-message'>
+              Не нашли репозитории. Возможно, у пользователя их пока нет.
+            </p>
+          ) : (
+            <div className='cards-wrapper'>
+              {repos.map(r => (
+                <div key={r.id} className='card-wrapper'>
+                  <h3>
+                    <a
+                      href={r.html_url}
+                      target='_blank'
+                      rel='noopener noreferrer'>
+                      {r.name}
+                    </a>
+                  </h3>
+                  <p>{r.description || 'Описание отсутствует'}</p>
+                  <p>{r.stargazers_count} ⭐</p>
+                  <p>
+                    📅 Обновлено:{' '}
+                    {new Date(r.updated_at).toLocaleDateString('ru')}
+                  </p>
+                </div>
+              ))}
             </div>
-          ))}
+          )}
         </div>
       )}
     </>

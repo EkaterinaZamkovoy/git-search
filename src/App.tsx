@@ -6,6 +6,7 @@ import { AppDispatch, RootState } from './store/store';
 import { SearchBar } from './components/SearchBar';
 import { CardsBlock } from './components/CardsBlock';
 import { ErrorSnackbar } from './components/ErrorSnackbar';
+import githubIcon from './assets/icons8-github.svg';
 
 function App() {
   const dispatch = useDispatch<AppDispatch>();
@@ -26,12 +27,7 @@ function App() {
   return (
     <div className='main-wrapper'>
       <div className='main-title'>
-        <img
-          src='/public/icons8-github.svg'
-          alt='GitHub Icon'
-          width='50'
-          height='50'
-        />
+        <img src={githubIcon} alt='GitHub Icon' width='50' height='50' />
         <h1>GitHub Репозитории</h1>
       </div>
       <SearchBar />
